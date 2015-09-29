@@ -11,7 +11,7 @@ namespace ServerKupaint
         /// <summary>
         /// Device ID
         /// </summary>
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Connector used for datas transfert

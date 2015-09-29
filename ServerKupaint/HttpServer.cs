@@ -167,7 +167,7 @@ namespace ServerKupaint
             else
             {
                 //Find the device in devices list
-                var devicesQuery = Devices.Where(d => d.ID.ToLower() == objectId.ToLower());
+                var devicesQuery = Devices.Where(d => d.Id.ToLower() == objectId.ToLower());
                 IControllableDevice device = devicesQuery != null ? devicesQuery.First() : null;
 
                 if (device != null)
