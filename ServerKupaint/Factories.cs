@@ -31,10 +31,13 @@ namespace ServerKupaint
             {
                 while (reader.Read())
                 {
-                    if (reader.Name.ToLower() == "connector")
-                        device.Connector = ConnectorFactory.GetConnector(reader.GetAttribute("type"), reader.ReadSubtree());
-                    else
-                        FactoryTools.SetProperty(device, reader.Name, reader.GetAttribute("value"));
+                    if (reader.Name.ToLower() != "device")
+                    {
+                        if (reader.Name.ToLower() == "connector")
+                            device.Connector = ConnectorFactory.GetConnector(reader.GetAttribute("type"), reader.ReadSubtree());
+                        else
+                            FactoryTools.SetProperty(device, reader.Name, reader.GetAttribute("value"));
+                    }
                 }
             }
             return device;
