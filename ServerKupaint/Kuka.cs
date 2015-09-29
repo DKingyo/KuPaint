@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace ServerKupaint
 {
-    interface IControllableDevice
+    class Kuka : IControllableDevice
     {
         /// <summary>
         /// Device ID
         /// </summary>
-        string Id { get; set; }
+        public string ID { get; set; }
 
         /// <summary>
-        /// Connector used for datas transfer
+        /// Connector used for datas transfert
         /// </summary>
-        IRemoteConnector Connector { get; set; }
-
+        public IRemoteConnector Connector { get; set; }
     }
 }

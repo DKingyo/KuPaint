@@ -14,7 +14,7 @@ namespace ServerKupaint
         #endregion
 
         #region PROPERTIES
-        public string Adress
+        public string Address
         {
             get { return _adress; }
             set { _adress = value; }
