@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+
+
+<devices_collection>
+  <device id="Kuka">
+    <connector type="socket">
+      <adress value="192.168.1.7"/>
+      <port value="11000"/>
+    </connector>
+  </device>
+</devices_collection>
