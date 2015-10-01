@@ -35,29 +35,47 @@
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						
-						<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Blue</a></li>
-							<li><a href="#">Red</a></li>
-							<li><a href="#">Black</a></li>
+					
+							<!-- Split button -->
+							<div class="btn-group nav navbar-nav navbar-right">
+							  <button type="button" class="btn btn-primary  navbar-btn">Setting</button>
+							  <button type="button" class="btn btn-primary  navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							  </ul>
+							</div>
+					
+					
+						<ul class="nav navbar-nav navbar-right">
 							
-							<li><a href="#">Green</a></li>
+							<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Blue</a></li>
+								<li><a href="#">Red</a></li>
+								<li><a href="#">Black</a></li>
+								<li><a href="#">Green</a></li>
+							</ul>
+							</li>
+							
+							
 						</ul>
-						</li>
-					</ul>
-					<form class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-						<input type="text" class="form-control" placeholder="IP adress">
-						</div>
-						<button type="submit" class="btn btn-default">Connect</button>
-					</form>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">State</a></li>
 						
-					</ul>
+						
+						
+						<ul class="nav navbar-nav navbar-right" >
+							<li class="active" ><a href="#">State</a></li>
+							<li><a href="#">Save</a></li>
+							<li><a href="#">load</a></li>
+							<li><a href="#"><span class="glyphicon icon-bin" ></span>bin</a></li>
+						</ul>
 					</div><!-- /.navbar-collapse -->
 				</div><!-- /.container-fluid -->
 			</nav>
@@ -66,10 +84,18 @@
 			<!-- Include all compiled plugins (below), or include individual files as needed -->
 			<script src="js/bootstrap.min.js"></script>
 		</div>
-		<div class="container blop">
+		<div id="blop" class="container blop">
 			<div class="container special">
-				<div class="jumbotron">
-						<div class="btn-group-vertical hidden-xs" role="group">
+				<div id="alertArea" class="alertArea">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<strong>Warning!</strong> Better check yourself, you're not looking too good.
+					</div>
+				</div>
+			
+			
+				<div id="jumbotron" class="jumbotron">
+						<div id="button" class="btn-group-vertical hidden-xs" role="group">
 							<button type="button" class="btn btn-default">
 								<span class="glyphicon icon-draw"></span>
 							</button>
@@ -97,15 +123,36 @@
 							<button type="button" class="btn btn-default">2</button>
 							<button type="button" class="btn btn-default">3</button>
 						</div>
-						<div class="test">
+						<div  class="test">
 							<canvas id="mainCanvas"></canvas>
 						</div>
-						
-						
-					  
 				</div>
 			</div>
 		</div>
+		
+		
+
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body">
+						<p>Some text in the modal.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 	
 		<script src="js/my.js"></script>
 	</body>
