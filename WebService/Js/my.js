@@ -2,7 +2,7 @@ var canvas; //objet canvas
 var ctx; // contexte
 
 var state = [ "idle", "connected", "moving", "error"];
-var drawingLine = [[ {"x" : 0, "y":0},{"x" : 0.5, "y":0.5}]];
+var drawingLine = [[ ]];
 
 var drawingPoint = [ {"x" : 0.1, "y":0.1}];
 
@@ -10,7 +10,7 @@ var canvasXSize;
 var canvasYSize;
 
 
-//drawingState = 1 line
+//drawingState = 1 -> line , 2 -> bezier, 3-> draw
 var drawingState;
 
 
@@ -30,6 +30,7 @@ $( document ).ready( function (e) {
    
    console.log(canvas);
    canvas.addEventListener("mousedown", getPosition, false);
+   canvas.addEventListener("mousemove", mousemove, false);
    $(window ).resize( canvasResize);
    canvas.addEventListener("resize", canvasResize);
    
@@ -55,6 +56,8 @@ $( document ).ready( function (e) {
 	console.log("size" + canvas.offsetLeft);*/
 	
 	$("#btn-line")[0].addEventListener("click", btn_line,false);
+	$("#btn-bezier")[0].addEventListener("click", btn_bezier,false);
+	$("#btn-draw")[0].addEventListener("click", btn_draw,false);
 	
    window.setTimeout(boucle,1000);
 })
@@ -89,6 +92,9 @@ function btn_line(event)
 		drawingState = 0;
 		if(drawingLine[drawingLine.length-1].length <= 1)
 			drawingLine.pop();
+		/*console.log(drawingPoint);
+		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");*/
+		
 		drawingPoint = [];
 		boucle();
 	}
@@ -99,6 +105,57 @@ function btn_line(event)
 		drawingState = 1;
 		drawingLine.push(new Array());
 	}
+}
+
+function btn_bezier(event)
+{
+	if( drawingState == 2)
+	{
+		$("#btn-bezier").removeClass("active");
+		console.log("drawingState = 0");
+		drawingState = 0;
+		if(drawingLine[drawingLine.length-1].length <= 1)
+			drawingLine.pop();
+		drawingPoint = [];
+		boucle();
+	}
+	else
+	{
+		$("#btn-bezier").addClass("active");
+		console.log("drawingState = 2");
+		drawingState = 2;
+		drawingLine.push(new Array());
+	}
+}
+
+
+
+function btn_draw(event)
+{
+	if( drawingState == 3)
+	{
+		$("#btn-draw").removeClass("active");
+		console.log("drawingState = 0");
+		drawingState = 0;
+		if(drawingLine[drawingLine.length-1].length <= 1)
+			drawingLine.pop();
+		/*console.log(drawingPoint);
+		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");*/
+		
+		drawingPoint = [];
+		boucle();
+	}
+	else
+	{
+		$("#btn-draw").addClass("active");
+		console.log("drawingState = 1");
+		drawingState = 3;
+		drawingLine.push(new Array());
+	}
+}
+
+function mousemove{
+	
 }
 
 
