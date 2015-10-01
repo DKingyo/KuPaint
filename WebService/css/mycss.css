@@ -31,10 +31,14 @@ html,body {height:100%;}
 	}
 
 canvas {
-	background-color:#737373;
+	background-color:#FFFFFF;
 	position:relative;
 	bottom:0px;
 	width:100%;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	cursor: default;
 	/*height:100%;*/
 	/*z-index:1;*/
 	}
