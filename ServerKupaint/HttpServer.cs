@@ -137,90 +137,92 @@ namespace ServerKupaint
             //Parse request to catch each elements
             if (request.Contains('/'))
             {
-                objectId = request.Split('/')[1];
-                method = request.Split('/').Last();
+                objectId = request.Split('/').Last().Split('?').First();
+                method = request.Split('?').Last();
                 if (method.Contains('='))
                 {
                     argument = method.Split('=').Last();
                     method = method.Split('=')[0];
                 }
             }
-            //Requests for server
-            if (objectId.ToLower() == "server")
+            if (objectId != string.Empty)
             {
-                switch (method.ToLower())
+                //Requests for server
+                if (objectId.ToLower() == "server")
                 {
-                    case "stop":
-                        Console.WriteLine("  [HttpServer] Closing...");
-                        result = "Goodbye !";
-                        _keepRunning = false;
-                        break;
+                    switch (method.ToLower())
+                    {
+                        case "stop":
+                            Console.WriteLine("  [HttpServer] Closing...");
+                            result = "Goodbye !";
+                            _keepRunning = false;
+                            break;
+                    }
+                }
+                //Requests for remote controller
+                else if (objectId.ToLower() == "remote")
+                {
+
+
+                }
+                //Requests to robots
+                else
+                {
+                    //Find the device in devices list
+                    var devicesQuery = Devices.Where(d => d.Id.ToLower() == objectId.ToLower());
+                    IControllableDevice device = devicesQuery != null ? devicesQuery.First() : null;
+
+                    if (device != null)
+                    {
+                        //switch (method.ToLower())
+                        //{
+                        //    //Return a JSON representing a robot
+                        //    case "status":
+                        //        result = new RobotProxy(r).ToJson();
+                        //        Console.WriteLine(string.Format("  [HttpServer] Response: {0}", result));
+                        //        break;
+
+                        //    //Call a initialisation of a robot
+                        //    case "reset":
+                        //        r.InitRobot();
+                        //        result = string.Format("[{0}] Reset", r.Name);
+                        //        break;
+
+                        //    //Stop the program running on the robot
+                        //    case "stop":
+                        //        result = string.Format("[{0}] Ok j'arrête", r.Name);
+                        //        r.StopProgram();
+                        //        break;
+
+                        //    //Start a program on the robot
+                        //    case "start":
+                        //        if (!r.ProgRunning)
+                        //        {
+                        //            result = string.Format("[{0}] C'est parti !", r.Name);
+                        //            r.StartProgram(argument);
+                        //        }
+                        //        else
+                        //        {
+                        //            result = string.Format("[{0}] Je suis pas multitache :(", r.Name);
+                        //        }
+                        //        break;
+                        //    //Pause/Restart the program running on the robot
+                        //    case "pause":
+                        //        result = string.Format("[{0}] Pause/Reprise", r.Name);
+                        //        r.Pause();
+                        //        break;
+
+                        //    //Access to a property of the robot and set a value
+                        //    //using reflexion, the property need to have a set method
+                        //    default:
+                        //        if (r.SetProperty(method, argument))
+                        //            result = new RobotProxy(r).ToJson();
+                        //        break;
+
+                        //}
+                    }
                 }
             }
-            //Requests for remote controller
-            else if (objectId.ToLower() == "remote")
-            {
-
-
-            }
-            //Requests to robots
-            else
-            {
-                //Find the device in devices list
-                var devicesQuery = Devices.Where(d => d.Id.ToLower() == objectId.ToLower());
-                IControllableDevice device = devicesQuery != null ? devicesQuery.First() : null;
-
-                if (device != null)
-                {
-                    //switch (method.ToLower())
-                    //{
-                    //    //Return a JSON representing a robot
-                    //    case "status":
-                    //        result = new RobotProxy(r).ToJson();
-                    //        Console.WriteLine(string.Format("  [HttpServer] Response: {0}", result));
-                    //        break;
-
-                    //    //Call a initialisation of a robot
-                    //    case "reset":
-                    //        r.InitRobot();
-                    //        result = string.Format("[{0}] Reset", r.Name);
-                    //        break;
-
-                    //    //Stop the program running on the robot
-                    //    case "stop":
-                    //        result = string.Format("[{0}] Ok j'arrête", r.Name);
-                    //        r.StopProgram();
-                    //        break;
-
-                    //    //Start a program on the robot
-                    //    case "start":
-                    //        if (!r.ProgRunning)
-                    //        {
-                    //            result = string.Format("[{0}] C'est parti !", r.Name);
-                    //            r.StartProgram(argument);
-                    //        }
-                    //        else
-                    //        {
-                    //            result = string.Format("[{0}] Je suis pas multitache :(", r.Name);
-                    //        }
-                    //        break;
-                    //    //Pause/Restart the program running on the robot
-                    //    case "pause":
-                    //        result = string.Format("[{0}] Pause/Reprise", r.Name);
-                    //        r.Pause();
-                    //        break;
-
-                    //    //Access to a property of the robot and set a value
-                    //    //using reflexion, the property need to have a set method
-                    //    default:
-                    //        if (r.SetProperty(method, argument))
-                    //            result = new RobotProxy(r).ToJson();
-                    //        break;
-
-                    //}
-                }
-            }
-            
             //Return request result, or error message
             return result ?? "Bad request"; ;
         }
