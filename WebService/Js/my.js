@@ -2,7 +2,7 @@ var canvas; //objet canvas
 var ctx; // contexte
 
 var state = [ "idle", "connected", "moving", "error"];
-var drawingLine = [ {"x" : 0, "y":0}];
+var drawingLine = [[ {"x" : 0, "y":0},{"x" : 0.5, "y":0.5}]];
 
 var drawingPoint = [ {"x" : 0.1, "y":0.1}];
 
@@ -76,15 +76,29 @@ function canvasResize()
 	console.log("resize" + canvas.width+" "+canvas.height);
 	
 	//1.31
-	
+	if (ctx != undefined ) boucle();
 	
 }
 
 function btn_line(event)
 {
-	$("#btn-line").addClass("active");
-	console.log("drawingState = 1");
-	drawingState = 1;
+	if( drawingState == 1)
+	{
+		$("#btn-line").removeClass("active");
+		console.log("drawingState = 0");
+		drawingState = 0;
+		if(drawingLine[drawingLine.length-1].length <= 1)
+			drawingLine.pop();
+		drawingPoint = [];
+		boucle();
+	}
+	else
+	{
+		$("#btn-line").addClass("active");
+		console.log("drawingState = 1");
+		drawingState = 1;
+		drawingLine.push(new Array());
+	}
 }
 
 
@@ -126,7 +140,10 @@ function getPosition(event)
 	
 	if(drawingState == 1){
 		drawingPoint.push({"x" : x/canvasXSize, "y":y/canvasYSize});
+		drawingLine[drawingLine.length-1].push({"x" : x/canvasXSize, "y":y/canvasYSize});
 	}
+	
+	
 	
 	boucle();
 	
@@ -161,6 +178,33 @@ function boucle()
 	ctx.stroke();
 	ctx.restore();
    
+   
+	});
+	
+	drawingLine.forEach(function(entry) {
+		/*ctx.save();
+		entry.forEach(function (point){
+			ctx.lineTo(point.x*canvasXSize, point.y*canvasYSize);
+			
+		});
+   
+	
+	
+	ctx.closePath();
+	ctx.stroke();
+	ctx.restore();*/
+	
+	ctx.save();
+	
+	for(var i = 0; i < entry.length; i++){
+		if(i == 0)
+			ctx.moveTo(entry[i].x*canvasXSize, entry[i].y*canvasYSize);
+		else
+			ctx.lineTo(entry[i].x*canvasXSize, entry[i].y*canvasYSize);
+	}
+   
+	ctx.stroke();
+	ctx.restore();
    
 	});
 	
