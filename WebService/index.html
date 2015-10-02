@@ -44,9 +44,9 @@
 								<span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
+								<li><a href="#">Live</a></li>
+								<li><a href="#">Paint</a></li>
+								<li><a href="#">View</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="#">Separated link</a></li>
 							  </ul>
@@ -58,10 +58,10 @@
 							<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Blue</a></li>
-								<li><a href="#">Red</a></li>
-								<li><a href="#">Black</a></li>
-								<li><a href="#">Green</a></li>
+								<li onClick="change_color_blue()" >	<a href="#">Blue</a></li>
+								<li onClick="change_color_red()" >	<a href="#">Red</a></li>
+								<li onClick="change_color_green()" ><a href="#">Green</a></li>
+								<li onClick="change_color_black()" ><a href="#">Black</a></li>
 							</ul>
 							</li>
 							
@@ -73,8 +73,8 @@
 						<ul class="nav navbar-nav navbar-right" >
 							<li class="active" ><a href="#">State</a></li>
 							<li><a href="#">Save</a></li>
-							<li><a href="#">load</a></li>
-							<li><a href="#"><span class="glyphicon icon-bin" ></span>bin</a></li>
+							<li><a href="#">Load</a></li>
+							<li onClick="bin()" > <a href="#" >New</a></li>
 						</ul>
 					</div><!-- /.navbar-collapse -->
 				</div><!-- /.container-fluid -->

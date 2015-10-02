@@ -158,6 +158,8 @@ function boucle()
 {
 	//draw everything
 	
+	//ctx.strokeStyle = '#ff0000';
+	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	
 	drawingPoint.forEach(function(entry) {
@@ -216,6 +218,31 @@ function boucle()
     ctx.stroke();
 }
 
+
+function change_color_blue(){
+	ctx.strokeStyle = '#3366FF';
+	boucle();
+}
+function change_color_red(){
+	ctx.strokeStyle = '#FF0000';
+	boucle();
+}
+function change_color_black(){
+	ctx.strokeStyle = '#191919';
+	boucle();
+}
+function change_color_green(){
+	ctx.strokeStyle = '#33CC33';
+	boucle();
+}
+
+function bin()
+{
+	console.log("Bin");
+	drawingLine = [[ ]];
+	drawingPoint = [];
+	boucle();
+}
 
 
 

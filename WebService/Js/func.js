@@ -20,11 +20,17 @@ function handler(event)
 
 function start_draw(){
 	$("#mainCanvas").mousemove(draw_mousemove);
-	$("#mainCanvas").click(draw_click);
+	$("#mainCanvas").mousedown(draw_click_down);
+	$("#mainCanvas").mouseup(draw_click_up);
 }
 function stop_draw(){
 	$("#mainCanvas").off("mousemove",draw_mousemove);
-	$("#mainCanvas").off("click", draw_click);
+	$("#mainCanvas").off("mousedown", draw_click_down);
+	$("#mainCanvas").off("mouseup", draw_click_up);
+	drawingLine.push(new Array());
+	drawingPoint = [];
+	boucle();
+	
 }
 function draw_mousemove(event)
 {
@@ -51,37 +57,49 @@ function draw_mousemove(event)
 }
 // draw click start 
 var draw_cs = 0;
-function draw_click(event)
+function draw_click_down(event)
 {
-	if (draw_cs == 0 )
-	{
+		drawingPoint = [];
+		drawingPoint.push(eventToR(event));
+		drawingLine[drawingLine.length-1].push(eventToR(event));
 		draw_cs = 1;
 		console.log("draw click : "+ (canvasXoffset + event.pageX) + " " + (canvasYoffset + event.pageY));
-		drawingLine.push(new Array());
-	}
-	else{
+	
+		
+}
+function draw_click_up(event)
+{
+	
 		draw_cs = 0;
 		drawingPoint.push(eventToR(event));
-		
 		drawingLine[drawingLine.length-1].push(eventToR(event));
+		
+		drawingLine.push(new Array());
+		
 		boucle();
-	}
 		
 }
 
 function start_line(){
 	console.log("start_line");
-	if( drawingState == 0)
+	/*if( drawingState == 0)
 	{
 		$("#btn-line").addClass("active");
 		console.log("drawingState = 1");
 		drawingState = 1;
 		drawingLine.push(new Array());
-	}
+	}*/
+	
+	
+	$("#mainCanvas").click(line_click);
 }
 function stop_line(){
 	console.log("stop_line");
-	if( drawingState == 1)
+	$("#mainCanvas").off("click", line_click);
+	drawingLine.push(new Array());
+	drawingPoint = [];
+	boucle();
+	/*if( drawingState == 1)
 	{
 		$("#btn-line").removeClass("active");
 		console.log("drawingState = 0");
@@ -89,11 +107,17 @@ function stop_line(){
 		if(drawingLine[drawingLine.length-1].length <= 1)
 			drawingLine.pop();
 		/*console.log(drawingPoint);
-		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");*/
+		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");
 		
 		drawingPoint = [];
 		boucle();
-	}
+	}*/
+}
+
+function line_click(event){
+	drawingPoint.push(eventToR(event));
+	drawingLine[drawingLine.length-1].push(eventToR(event));
+	boucle();
 }
 
 function start_bezier()
