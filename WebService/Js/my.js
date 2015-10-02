@@ -9,9 +9,12 @@ var drawingPoint = [ {"x" : 0.1, "y":0.1}];
 var canvasXSize;
 var canvasYSize;
 
+var canvasXoffset;
+var canvasYoffset;
+
 
 //drawingState = 1 -> line , 2 -> bezier, 3-> draw
-var drawingState;
+var drawingState = 0;
 
 
 
@@ -55,9 +58,15 @@ $( document ).ready( function (e) {
 	console.log("size" + canvas.offsetTop);
 	console.log("size" + canvas.offsetLeft);*/
 	
-	$("#btn-line")[0].addEventListener("click", btn_line,false);
+	
+	
+	$( "button[id*='btn-']").click(handler);
+	
+	//$("#btn-line")[0].addEventListener("click", btn_line,false);
 	$("#btn-bezier")[0].addEventListener("click", btn_bezier,false);
 	$("#btn-draw")[0].addEventListener("click", btn_draw,false);
+	
+	link_buton_event();
 	
    window.setTimeout(boucle,1000);
 })
@@ -76,85 +85,20 @@ function canvasResize()
 	canvasOffsetTop = $("#jumbotron")[0].offsetTop + canvas.offsetTop;
 	canvasOffsetLeft = $("#jumbotron")[0].offsetLeft + canvas.offsetLeft;
 	
+	
+	canvasXoffset = document.body.scrollLeft + document.documentElement.scrollLeft - canvasOffsetLeft ;
+	canvasYoffset = document.body.scrollTop + document.documentElement.scrollTop - canvasOffsetTop;
+	
 	console.log("resize" + canvas.width+" "+canvas.height);
 	
 	//1.31
 	if (ctx != undefined ) boucle();
-	
 }
 
-function btn_line(event)
+
+
+function mousemove ( event )
 {
-	if( drawingState == 1)
-	{
-		$("#btn-line").removeClass("active");
-		console.log("drawingState = 0");
-		drawingState = 0;
-		if(drawingLine[drawingLine.length-1].length <= 1)
-			drawingLine.pop();
-		/*console.log(drawingPoint);
-		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");*/
-		
-		drawingPoint = [];
-		boucle();
-	}
-	else
-	{
-		$("#btn-line").addClass("active");
-		console.log("drawingState = 1");
-		drawingState = 1;
-		drawingLine.push(new Array());
-	}
-}
-
-function btn_bezier(event)
-{
-	if( drawingState == 2)
-	{
-		$("#btn-bezier").removeClass("active");
-		console.log("drawingState = 0");
-		drawingState = 0;
-		if(drawingLine[drawingLine.length-1].length <= 1)
-			drawingLine.pop();
-		drawingPoint = [];
-		boucle();
-	}
-	else
-	{
-		$("#btn-bezier").addClass("active");
-		console.log("drawingState = 2");
-		drawingState = 2;
-		drawingLine.push(new Array());
-	}
-}
-
-
-
-function btn_draw(event)
-{
-	if( drawingState == 3)
-	{
-		$("#btn-draw").removeClass("active");
-		console.log("drawingState = 0");
-		drawingState = 0;
-		if(drawingLine[drawingLine.length-1].length <= 1)
-			drawingLine.pop();
-		/*console.log(drawingPoint);
-		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");*/
-		
-		drawingPoint = [];
-		boucle();
-	}
-	else
-	{
-		$("#btn-draw").addClass("active");
-		console.log("drawingState = 1");
-		drawingState = 3;
-		drawingLine.push(new Array());
-	}
-}
-
-function mousemove{
 	
 }
 
@@ -191,7 +135,7 @@ function getPosition(event)
 	x -= canvasOffsetLeft;
 	y -= canvasOffsetTop;
 
-	console.log("x: " + x + "  y: " + y);
+	console.log(" pos click x: " + x + "  y: " + y);
 	doAlert("hey","how are you baby ?","info");
 	
 	
@@ -206,12 +150,7 @@ function getPosition(event)
 	
 }
 
-// success info warning danger
-function doAlert(  intro,  texte,  type)
-{
-	$( "#alertArea" ).html( "<div class=\"alert alert-"+type+" alert-dismissible fade in\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>"+intro+"</strong> "+texte+" </div>");
-	
-}
+
 
 
 
@@ -275,19 +214,10 @@ function boucle()
     ctx.bezierCurveTo(130,62.5,130,25,100,25);
     ctx.bezierCurveTo(85,25,75,37,75,40);
     ctx.stroke();
-  
-	
-	
 }
 
 
 
-function RtoP(x,y){
-	return {"x": x*canvasXSize, "y": y*canvasYSize};
-}
 
-function PtoR(x,y){
-	return {"x": x/canvasXSize, "y": y/canvasYSize};
-}
 
 
