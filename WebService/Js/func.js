@@ -237,12 +237,42 @@ function btn_draw(event)
 
 
 function start_text(){
-	$("#mainCanvas").mouseup(line_mouseup);
-}
-function stop_text(){
+	$("#mainCanvas").on("click",set_texte);
+	$('#font_text').val("blop");
+	$('#font_text').keyup(text_change);
+	$('#police_size').change(text_change);
+	$('#font').change(text_change);
+	
+	
+	$( '.police_size' ).click(function(){
+		console.log("fuck!!!");
+	});
+	
+	window.setTimeout(text_change,100);
+	
+	//display modal
 	
 }
+function text_change(){
+	console.log($('#font').val());
+	$('#font_text_p').text($('#font_text').val());
+	$('#font_text_p').css("fontFamily",$('#font').val());
+	
+	
+	
+	//window.setTimeout(text_change,100);
+}
 
+
+function stop_text(){
+	$("#mainCanvas").off("click",set_texte);
+}
+
+function set_texte(){
+	console.log("set_texte");
+	$('#textmodal').modal('toggle');
+	
+}
 
 
 

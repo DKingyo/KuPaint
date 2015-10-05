@@ -18,8 +18,15 @@ function add_entry(entry){
 
 //
 
-function add_texte(texte,center){
-	add_entry( new_entry("texte",center));
+function add_texte(texte,center,size){
+	
+	H.push({	"type":"texte",
+				"val": new Array(),
+				"texte":texte,
+				"centre":centre,
+				"size":size
+				});
+	//add_entry( new_entry("texte",center));
 }
 function add_trait(val){
 	add_entry( new_entry("trait",val));

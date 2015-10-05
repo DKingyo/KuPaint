@@ -10,6 +10,9 @@
 		<!-- Bootstrap -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/mycss.css" rel="stylesheet">
+		
+		<!-- Bootstrap Form Helpers -->
+		<link href="css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -152,10 +155,59 @@
 			</div>
 		</div>
 		
+		<div id="textmodal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Text setting</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-xs-6">
+								<div id="font" class="bfh-selectbox bfh-fonts" data-blank="false" data-font="Arial" style="display:inline-block;"></div>
+								<div  class="dropdown">
+									  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											Font size
+											<span class="caret"></span>
+									  </button>
+									  <ul  class="dropdown-menu" aria-labelledby="dropdownMenu1">
+											<li><a class="police_size" href="#">8px</a></li>
+											<li><a class="police_size" href="#">10px</a></li>
+											<li><a class="police_size" href="#">12px</a></li>
+											<li><a class="police_size" href="#">14px</a></li>
+											<li><a class="police_size" href="#">18px</a></li>
+											<li><a class="police_size" href="#">20px</a></li>
+											<li><a class="police_size" href="#">24px</a></li>
+											<li><a class="police_size" href="#">28px</a></li>
+									  </ul>
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<input id="font_text" type="text" class="form-control" placeholder="Jane Doe">
+								<p id="font_text_p" style="margin-top:5px">Some text in the modal.</p>
+							</div>
+						</div>
+					
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 		
 	
 		<script src="js/my.js"></script>
 		<script src="js/func.js"></script>
 		<script src="js/historique.js"></script>
+		<!-- Bootstrap Form Helpers -->
+		<script src="js/bootstrap-formhelpers.js"></script>
+		
 	</body>
 </html>
