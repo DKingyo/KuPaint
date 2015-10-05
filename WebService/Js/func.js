@@ -2,21 +2,9 @@ function link_buton_event(){
 	$("#btn-line").on("btn:start",start_line).on("btn:stop",stop_line);
 	$("#btn-draw").on("btn:start",start_draw).on("btn:stop",stop_draw);
 	$("#btn-bezier").on("btn:start",start_bezier).on("btn:stop",stop_bezier);
-	
+	$("#btn-text").on("btn:start",start_text).on("btn:stop",stop_text);
 }
-function handler(event)
-{
-	//alert("event : " + event.target.id + "this : " + this.id);
-	var elem = this;
-	$( "button[id*='btn-']").each(function(){
-		var p = $(this);
-		if(p.hasClass("active"))
-			p.trigger("btn:stop").removeClass("active");
-		else
-			if(elem == this)
-				p.addClass("active").trigger("btn:start");
-	});
-}
+
 
 function start_draw(){
 	$("#mainCanvas").mousemove(draw_mousemove);
@@ -27,9 +15,8 @@ function stop_draw(){
 	$("#mainCanvas").off("mousemove",draw_mousemove);
 	$("#mainCanvas").off("mousedown", draw_click_down);
 	$("#mainCanvas").off("mouseup", draw_click_up);
-	drawingLine.push(new Array());
 	drawingPoint = [];
-	boucle();
+	update_drawing();
 	
 }
 function draw_mousemove(event)
@@ -43,11 +30,12 @@ function draw_mousemove(event)
 		if( dist*21 > 0.5 )
 		{
 			drawingPoint.push(eventToR(event));
-			drawingLine[drawingLine.length-1].push(eventToR(event));
+			//drawingLine[drawingLine.length-1].push(eventToR(event));
+			H[H.length-1]["val"].push(eventToR(event))
 		}
 			
 		
-		boucle();
+		update_drawing();
 	}
 	
 		
@@ -55,33 +43,83 @@ function draw_mousemove(event)
 	//21
 	console.log("draw_mousemove");
 }
+
+var pick_point_state_moving = 0; // variable d'etat de pick_point 0 -> idle, 1-> moving_point
+function pick_point(event) // on click check for point in range
+{
+	for(var i = 0; i < drawingPoint.length;i++ )
+	{
+		var p1 = drawingPoint[i];
+		var p2 = eventToR(event);
+		
+		var dist = Math.sqrt((p2.y - p1.y)*(p2.y - p1.y) + (p2.x - p1.x)*(p2.x - p1.x));
+		
+		if( dist < pointSelectionSize )
+		{
+			pointSelectionId = i;
+			$("#mainCanvas").mousemove(picked_point_moving);
+			$("#mainCanvas").mouseup(function(){
+				pick_point_state_moving = 0;
+				$("#mainCanvas").off("mousemove", picked_point_moving);
+			});
+			pick_point_state_moving = 1;
+			return true; // on ne voudrais pas attacher plusieurs fonctions...
+		}
+		
+	}
+	return false;
+	
+}
+
+function picked_point_moving(event){
+	
+	var p2 = eventToR(event);
+	
+	drawingPoint[pointSelectionId] = p2;
+	
+	drawingLine[drawingLine.length-1][pointSelectionId] = p2;
+	H[H.length-1]["val"][pointSelectionId] = p2;
+	update_drawing();
+	
+}
+
+
 // draw click start 
 var draw_cs = 0;
 function draw_click_down(event)
 {
+	if(!pick_point(event)){
+		
 		drawingPoint = [];
 		drawingPoint.push(eventToR(event));
-		drawingLine[drawingLine.length-1].push(eventToR(event));
+		add_trait(new Array());
+		H[H.length-1]["val"].push(eventToR(event));
 		draw_cs = 1;
 		console.log("draw click : "+ (canvasXoffset + event.pageX) + " " + (canvasYoffset + event.pageY));
-	
+	}
+		
 		
 }
 function draw_click_up(event)
 {
-	
+	if(draw_cs == 1){
 		draw_cs = 0;
 		drawingPoint.push(eventToR(event));
-		drawingLine[drawingLine.length-1].push(eventToR(event));
+		H[H.length-1]["val"].push(eventToR(event));
+		//drawingLine[drawingLine.length-1].push(eventToR(event));
+		update_drawing();
+	}
 		
-		drawingLine.push(new Array());
-		
-		boucle();
 		
 }
 
 function start_line(){
 	console.log("start_line");
+	
+	add_trait(new Array());
+	drawingPoint = [];
+	$("#mainCanvas").mousedown(mousedownLine);
+		
 	/*if( drawingState == 0)
 	{
 		$("#btn-line").addClass("active");
@@ -90,15 +128,19 @@ function start_line(){
 		drawingLine.push(new Array());
 	}*/
 	
+	// mouse down
+	// if pick_point
+	// true mouse point
+	// false link event mouse up
 	
-	$("#mainCanvas").click(line_click);
+	//$("#mainCanvas").click(line_click);
 }
 function stop_line(){
+	$("#mainCanvas").off("mousedown", mousedownLine );
 	console.log("stop_line");
-	$("#mainCanvas").off("click", line_click);
-	drawingLine.push(new Array());
 	drawingPoint = [];
-	boucle();
+	
+	update_drawing();
 	/*if( drawingState == 1)
 	{
 		$("#btn-line").removeClass("active");
@@ -110,14 +152,25 @@ function stop_line(){
 		doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");
 		
 		drawingPoint = [];
-		boucle();
+		update_drawing();
 	}*/
 }
 
-function line_click(event){
+function mousedownLine(event){
+	if (!pick_point(event)){
+		$("#mainCanvas").mouseup(line_mouseup);
+	}
+}
+
+function line_mouseup(event){
+	
+	$("#mainCanvas").off("mouseup", line_mouseup);
 	drawingPoint.push(eventToR(event));
+	H[H.length-1]["val"].push(eventToR(event));
 	drawingLine[drawingLine.length-1].push(eventToR(event));
-	boucle();
+	update_drawing();
+	
+	
 }
 
 function start_bezier()
@@ -138,7 +191,7 @@ function btn_bezier(event)
 			if(drawingLine[drawingLine.length-1].length <= 1)
 				drawingLine.pop();
 			drawingPoint = [];
-			boucle();
+			update_drawing();
 		}
 		else
 		{
@@ -166,7 +219,7 @@ function btn_draw(event)
 			doAlert("BLOP","" + JSON.stringify(drawingLine) ,"info");*/
 			
 			drawingPoint = [];
-			boucle();
+			update_drawing();
 		}
 		else
 		{
@@ -178,6 +231,19 @@ function btn_draw(event)
 	}
 	
 }
+
+
+
+
+
+function start_text(){
+	$("#mainCanvas").mouseup(line_mouseup);
+}
+function stop_text(){
+	
+}
+
+
 
 
 
@@ -205,5 +271,33 @@ function PtoR(x,y){
 }
 
 function eventToR(event){
+	//console.log(event.pageX)
 	return PtoR(canvasXoffset + event.pageX, canvasYoffset + event.pageY);
 }
+
+
+
+
+/*
+move to the first point
+   ctx.moveTo(points[0].x, points[0].y);
+
+
+   for (i = 1; i < points.length - 2; i ++)
+   {
+      var xc = (points[i].x + points[i + 1].x) / 2;
+      var yc = (points[i].y + points[i + 1].y) / 2;
+      ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+   }
+ // curve through the last two points
+ ctx.quadraticCurveTo(points[i].x, points[i].y, points[i+1].x,points[i+1].y);
+
+
+*/
+
+
+
+
+
+
+
