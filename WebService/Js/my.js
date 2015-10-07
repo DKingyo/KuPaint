@@ -251,6 +251,7 @@ function change_color_green(){
 function bin()
 {
 	console.log("Bin");
+	H = new Array();
 	drawingLine = [[ ]];
 	drawingPoint = [];
 	update_drawing();
@@ -258,8 +259,8 @@ function bin()
 
 function send(){
 	
-	
-	sendDataToKuka(build_Json());
+	console.log(build_Json());
+	//sendDataToKuka(build_Json());
 
 	/*console.log("send data" + JSON.stringify(H));
 	$.post( "http://localhost/webservices/devicecontroller.asmx/sendData", JSON.stringify(H), function( data ) {
@@ -413,6 +414,18 @@ function build_Json(){
 	return path;
 	
 	
+}
+
+function upload_display_modal(){
+	
+	$('#filemodal').modal('toggle');
+}
+
+
+
+function send_file(){
+	console.log($('#InputFile'));
+	ImagetoJson2($('#InputFile').files[0]);
 }
 
 

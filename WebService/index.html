@@ -76,7 +76,7 @@
 						<ul class="nav navbar-nav navbar-right" >
 							<li class="active" ><a href="#">State</a></li>
 							<li><a href="#" onclick="send()" >Send</a></li>
-							<li><a href="#">Load</a></li>
+							<li onClick="upload_display_modal()" ><a href="#">Load</a></li>
 							<li onClick="bin()" > <a href="#" >New</a></li>
 						</ul>
 					</div><!-- /.navbar-collapse -->
@@ -202,6 +202,34 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="filemodal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Text setting</h4>
+					</div>
+					<div class="modal-body">
+						<input type="file" id="InputFile">
+						<div class="progress">
+							<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+								<span class="sr-only">45% Complete</span>
+							</div>
+						</div>
+					
+						
+					</div>
+					<div class="modal-footer">
+						<button onclick="send_file()" id="file_send" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 		
 		<script src="js/my.js"></script>
 		<script src="js/func.js"></script>

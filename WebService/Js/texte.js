@@ -124,24 +124,7 @@ function text_pick_point(event) // on click check for point in range
 	// si on deplace le texte
 	
 		
-	if(H[H.length-1]["center"] != undefined)
-	{
-		// si le y est bon
-		if(xRtoP(Math.abs(H[H.length-1]["center"].x-p2.x)) < text_width /2){
-			
-			if(yRtoP(Math.abs(H[H.length-1]["center"].y-p2.y)) < text_height/2){
-				$("#mainCanvas").on("mousemove",move_texte);
-				$("#mainCanvas").on("mouseup",function(){
-					$("#mainCanvas").off("mousemove",move_texte);
-				});
-				
-				
-				texte_moving_point = Point(p2.x-H[H.length-1]["center"].x,p2.y-H[H.length-1]["center"].y);
-				
-				return true;
-			}
-		}
-	}
+	
 	
 	
 	
@@ -168,6 +151,27 @@ function text_pick_point(event) // on click check for point in range
 		}
 		
 	}
+	
+	
+	if(H[H.length-1]["center"] != undefined)
+	{
+		// si le y est bon
+		if(xRtoP(Math.abs(H[H.length-1]["center"].x-p2.x)) < text_width /2){
+			
+			if(yRtoP(Math.abs(H[H.length-1]["center"].y-p2.y)) < text_height/2){
+				$("#mainCanvas").on("mousemove",move_texte);
+				$("#mainCanvas").on("mouseup",function(){
+					$("#mainCanvas").off("mousemove",move_texte);
+				});
+				
+				
+				texte_moving_point = Point(p2.x-H[H.length-1]["center"].x,p2.y-H[H.length-1]["center"].y);
+				
+				return true;
+			}
+		}
+	}
+	
 	return false;
 	
 }

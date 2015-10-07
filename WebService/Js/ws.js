@@ -59,6 +59,53 @@ function ImageToJson(imageBase64) {
     });
 }
 
+
+
+
+function ImagetoJson2(imagebase64){
+	
+	
+	
+	
+	
+	var ImageData  = ctx.getImageData(0, 0, canvasXSize, canvasYSize);
+	
+	var Json_Data = JSON.stringify(getBase64Image(ImageData));
+	
+	var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+					if (evt.lengthComputable) {
+						var percentComplete = evt.loaded / evt.total;
+						//Do something with upload progress
+						console.log(percentComplete);
+					}
+				}, false);
+				//Download progress
+				xhr.addEventListener("progress", function(evt){
+					if (evt.lengthComputable) {
+						var percentComplete = evt.loaded / evt.total;
+						//Do something with download progress
+						console.log(percentComplete);
+					}
+				}, false);
+				return xhr;
+			},
+		type: 'POST',
+		url: urlWebService + "/ImageToJson",
+		data: '{ imageBase64:' + '"' + Json_Data + '"}',
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(data){
+				//Do something success-ish
+			}
+	});
+}
+
 function SVGToJson(svg) {
     var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
     $.ajax({
