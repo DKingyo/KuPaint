@@ -73,16 +73,21 @@ function ImageToJson() {
 
 
 
-function ImagetoJson2(){
+function ImagetoJson2(image){
 	
 	
 	
 	console.log("try send file... ");
 	
-	var ImageData  = ctx.getImageData(0, 0, canvasXSize, canvasYSize);
+	/*var ImageData  = ctx.getImageData(0, 0, canvasXSize, canvasYSize);
 	console.log(ImageData);
 	
-	var Json_Data = JSON.stringify(btoa(ImageData.data));
+	var Json_Data = JSON.stringify(btoa(ImageData.data));*/
+	
+	console.log(image);
+	
+	var Json_Data = JSON.stringify(image);
+	
 	
 	var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
 	$.ajax({

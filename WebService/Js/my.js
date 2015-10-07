@@ -425,7 +425,7 @@ function upload_display_modal(){
 
 function send_file(){
 	console.log($('#InputFile')[0].files);
-	ImageToJson();
+	ImagetoJson2($('#InputFile')[0].files[0]);
 }
 
 
