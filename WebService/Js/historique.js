@@ -23,7 +23,7 @@ function add_texte(texte,center,size,font,select){
 	H.push({	"type":"texte",
 				"val": new Array(),
 				"texte":texte,
-				"center":center,
+				"center":center, 
 				"size":size,
 				"font":font,
 				"select":select

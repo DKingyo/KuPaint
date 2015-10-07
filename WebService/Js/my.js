@@ -257,13 +257,16 @@ function bin()
 }
 
 function send(){
+	
+	
+	sendDataToKuka(build_Json());
 
-	console.log("send data" + JSON.stringify(H));
+	/*console.log("send data" + JSON.stringify(H));
 	$.post( "http://localhost/webservices/devicecontroller.asmx/sendData", JSON.stringify(H), function( data ) {
 	console.log( data.name ); // John
 	console.log( data.time ); // 2pm
 	}, "json");
-	console.log("send data end");
+	console.log("send data end");*/
 }
 
 
@@ -382,6 +385,34 @@ function update_drawing()
     ctx.bezierCurveTo(130,62.5,130,25,100,25);
     ctx.bezierCurveTo(85,25,75,37,75,40);
     ctx.stroke();
+}
+
+
+function build_Json(){
+	
+	var path = { "path": new Array()};
+	
+	
+	
+	
+	var id = 0;
+	H.forEach(function(entry) {
+		
+		
+		if(entry["type"] == "trait"){
+			var trait = {"id":id,"pts":[]};
+			for(var i = 0; i < entry["val"].length; i++){
+				trait["pts"].push(entry["val"][i]);
+			}
+			path["path"].push(trait);
+		}
+		id++;
+	});
+	
+	
+	return path;
+	
+	
 }
 
 
