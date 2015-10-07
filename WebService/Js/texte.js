@@ -68,6 +68,11 @@ function text_mousedown(){
 function set_texte(event){
 		
 	
+	
+		if(H[H.length-1]["select"]){
+			H[H.length-1]["select"] = false;
+		}
+	
 		font_center = eventToR(event);
 		console.log("set_texte");
 		$('#textmodal').modal('toggle');

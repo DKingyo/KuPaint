@@ -69,7 +69,28 @@ $( document ).ready( function (e) {
 	link_buton_event();
 	
    window.setTimeout(update_drawing,1000);
+   
+   
+   window.addEventListener('resize', place_button, true);
+   place_button();
+   
 })
+
+
+
+function place_button(){
+	if ( parseInt($(".test").css("padding-top"), 10)  >= 50 )
+	{
+		$("#button").removeClass();
+		$("#button").addClass("btn-group");
+		
+	}
+	else{
+		$("#button").removeClass();
+		$("#button").addClass("btn-group-vertical");
+	}
+}
+
 
 function canvasResize()
 {
@@ -233,18 +254,22 @@ function boucle()
 
 function change_color_blue(){
 	ctx.strokeStyle = '#3366FF';
+	ctx.fillStyle = '#3366FF';
 	update_drawing();
 }
 function change_color_red(){
 	ctx.strokeStyle = '#FF0000';
+	ctx.fillStyle = '#FF0000';
 	update_drawing();
 }
 function change_color_black(){
 	ctx.strokeStyle = '#191919';
+	ctx.fillStyle = '#191919';
 	update_drawing();
 }
 function change_color_green(){
 	ctx.strokeStyle = '#33CC33';
+	ctx.fillStyle = '#33CC33';
 	update_drawing();
 }
 
@@ -316,7 +341,7 @@ function update_drawing()
 		ctx.restore();*/
 		
 		if(entry["type"] == "trait"){
-			//ctx.save();
+			ctx.save();
 			
 			for(var i = 0; i < entry["val"].length; i++){
 				if(i == 0)
@@ -325,9 +350,85 @@ function update_drawing()
 					ctx.lineTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
 			}
 			ctx.stroke();
-			//ctx.restore();
+			
+			
+			
+			
+			
+			ctx.restore();
+		}
+		else if(entry["type"] == "rect"){
+			ctx.save();
+			ctx.beginPath();
+			ctx.moveTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			
+			ctx.closePath();
+			ctx.globalAlpha = 0.1;
+			ctx.fill();
+			ctx.globalAlpha = 1;
+			ctx.stroke();
+			
+			
+			
+			
+			
+			ctx.restore();
+		}
+		else if(entry["type"] == "cercle"){
+			ctx.save();
+			ctx.beginPath();
+			ctx.ellipse(entry["center"].x*canvasXSize,entry["center"].y*canvasYSize,entry["width"]*canvasXSize/2,entry["height"]*canvasYSize/2,0,0,Math.PI*2,0);
+			ctx.closePath();
+			
+			
+			/*ctx.beginPath();
+			ctx.moveTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			
+			ctx.closePath();*/
+			ctx.globalAlpha = 0.1;
+			ctx.fill();
+			ctx.globalAlpha = 1;
+			ctx.stroke();
+			
+			
+			
+			
+			
+			ctx.restore();
+		}
+		else if(entry["type"] == "spline"){
+			
+			if (entry["val"].length >= 3)
+			{
+				ctx.save();
+				console.log("bezier");
+				ctx.moveTo(entry["val"][0].x* canvasXSize, entry["val"][0].y * canvasYSize);
+
+				var i;
+				for (i = 1; i < entry["val"].length - 2; i ++)
+				{
+				  var xc = (entry["val"][i].x * canvasXSize + entry["val"][i + 1].x * canvasXSize) / 2;
+				  var yc = (entry["val"][i].y * canvasYSize + entry["val"][i + 1].y * canvasYSize) / 2;
+				  ctx.quadraticCurveTo(entry["val"][i].x * canvasXSize, entry["val"][i].y * canvasYSize, xc, yc);
+				}
+				 // curve through the last two points
+				 ctx.quadraticCurveTo(entry["val"][i].x * canvasXSize, entry["val"][i].y * canvasYSize, entry["val"][i+1].x * canvasXSize,entry["val"][i+1].y * canvasYSize);
+				
+				ctx.stroke();
+				ctx.restore();
+			}
+			
+			
 		}
 		else if (entry["type"] == "texte"){
+			
+			ctx.save();
 			var text = entry["texte"];
 			ctx.font = entry["size"] + " " + entry["font"];
 			ctx.textAlign = "center";
@@ -363,6 +464,7 @@ function update_drawing()
 				
 				
 			}
+			ctx.restore();
 			
 			
 			
@@ -424,10 +526,65 @@ function upload_display_modal(){
 
 
 function send_file(){
+	
+	
+	ImagetoJson2(loadImage());
+	/*
 	console.log($('#InputFile')[0].files);
+	
+	var wut = new Image();
+	wut.src = $('#InputFile')[0].files[0];
 	ImagetoJson2($('#InputFile')[0].files[0]);
+	*/
+	
+	
 }
 
 
+function loadImage() {
+        var input, file, fr, img;
 
+        if (typeof window.FileReader !== 'function') {
+            write("The file API isn't supported on this browser yet.");
+            return;
+        }
+
+        input = document.getElementById('InputFile');
+        if (!input) {
+            write("Um, couldn't find the imgfile element.");
+        }
+        else if (!input.files) {
+            write("This browser doesn't seem to support the `files` property of file inputs.");
+        }
+        else if (!input.files[0]) {
+            write("Please select a file before clicking 'Load'");
+        }
+        else {
+            file = input.files[0];
+            fr = new FileReader();
+            fr.onload = createImage;
+            fr.readAsDataURL(file);
+        }
+
+        function createImage() {
+            img = new Image();
+            img.onload = imageLoaded;
+            img.src = fr.result;
+        }
+
+        function imageLoaded() {
+            var canvas = document.getElementById("hidden_canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img,0,0);
+            console.log(canvas.toDataURL("image/png"));
+			return canvas.toDataURL("image/png");
+        }
+
+        function write(msg) {
+            
+            console.log(msg);
+        }
+ }
 

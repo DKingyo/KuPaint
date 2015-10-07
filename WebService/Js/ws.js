@@ -1,5 +1,5 @@
 function sendDataToKuka(jsonData) {
-    var urlWebService = "http://172.30.1.164/kupaint/webservices/devicecontroller.asmx";
+    var urlWebService = $("#HfWsUrl").attr("data-content") + "DeviceController.asmx";
     $.ajax({
         type: "POST",
         url: urlWebService + "/SendData",
@@ -73,23 +73,29 @@ function ImageToJson() {
 
 
 
-function ImagetoJson2(image){
-	
-	
-	
+function ImagetoJson2(imageBase64){
 	console.log("try send file... ");
 	
 	/*var ImageData  = ctx.getImageData(0, 0, canvasXSize, canvasYSize);
 	console.log(ImageData);
 	
 	var Json_Data = JSON.stringify(btoa(ImageData.data));*/
-	
-	console.log(image);
-	
-	var Json_Data = JSON.stringify(image);
+	//marche
 	
 	
-	var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
+	/*var test = getBase64Image(image);
+	
+	console.log(test);
+	
+	var Json_Data = JSON.stringify(image);*/
+	
+	
+	//var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
+	var urlWebService = "localhost";
+	
+	//console.log(Json_Data);
+	
+	
 	$.ajax({
 		xhr: function()
 			{
@@ -117,7 +123,7 @@ function ImagetoJson2(image){
 			},
 		type: 'POST',
 		url: urlWebService + "/ImageToJson",
-		data: '{ imageBase64:' + '"' + Json_Data + '"}',
+		data: '{ imageBase64:' + '"' + imageBase64 + '"}',
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: function(data){
@@ -141,3 +147,17 @@ function SVGToJson(svg) {
         }
     });
 }
+
+
+
+function getBase64Image(imgElem) {
+// imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
+    var canvastmp = document.createElement("canvas");
+    canvastmp.width = imgElem.clientWidth;
+    canvastmp.height = imgElem.clientHeight;
+    var ctx = canvastmp.getContext("2d");
+    ctx.drawImage(imgElem, 0, 0);
+    var dataURL = canvastmp.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+

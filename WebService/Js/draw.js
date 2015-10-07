@@ -6,7 +6,7 @@ function draw_mousemove(event)
 		var p2 = eventToR(event);
 		
 		var dist = Math.sqrt((p2.y - p1.y)*(p2.y - p1.y) + (p2.x - p1.x)*(p2.x - p1.x));
-		if( dist*21 > 0.5 )
+		if( dist*21 > 0.2 )
 		{
 			drawingPoint.push(eventToR(event));
 			//drawingLine[drawingLine.length-1].push(eventToR(event));
