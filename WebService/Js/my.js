@@ -256,6 +256,21 @@ function bin()
 	update_drawing();
 }
 
+function send(){
+
+	console.log("send data" + JSON.stringify(H));
+	$.post( "http://localhost/webservices/devicecontroller.asmx/sendData", JSON.stringify(H), function( data ) {
+	console.log( data.name ); // John
+	console.log( data.time ); // 2pm
+	}, "json");
+	console.log("send data end");
+}
+
+
+
+
+
+
 //draw evrything
 function update_drawing()
 {
@@ -292,22 +307,68 @@ function update_drawing()
    
 	
 	
-	ctx.closePath();
-	ctx.stroke();
-	ctx.restore();*/
-	
-	if(entry["type"] == "trait"){
+		ctx.closePath();
+		ctx.stroke();
+		ctx.restore();*/
 		
-		for(var i = 0; i < entry["val"].length; i++){
-			if(i == 0)
-				ctx.moveTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
-			else
-				ctx.lineTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
+		if(entry["type"] == "trait"){
+			//ctx.save();
+			
+			for(var i = 0; i < entry["val"].length; i++){
+				if(i == 0)
+					ctx.moveTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
+				else
+					ctx.lineTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
+			}
+			ctx.stroke();
+			//ctx.restore();
 		}
-	}
-	ctx.save();   
-	ctx.stroke();
-	ctx.restore();
+		else if (entry["type"] == "texte"){
+			var text = entry["texte"];
+			ctx.font = entry["size"] + " " + entry["font"];
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			var textPxLength = ctx.measureText(text);
+			ctx.fillStyle = ctx.strokeStyle;
+			ctx.fillText(text,entry["center"].x*canvasXSize,entry["center"].y*canvasYSize);
+			
+			if(entry["select"] == true){
+				
+				
+				var text_width = ctx.measureText(text).width;
+				var text_height = entry["size"].substring(0, entry["size"].indexOf('p'));
+				
+				var control_point = new Array();
+				control_point.push(PtoR(xRtoP(entry["center"].x) + text_width /2 ,yRtoP(entry["center"].y) + text_height /2));
+				control_point.push(PtoR(xRtoP(entry["center"].x) - text_width /2 ,yRtoP(entry["center"].y) + text_height /2));
+				control_point.push(PtoR(xRtoP(entry["center"].x) - text_width /2 ,yRtoP(entry["center"].y) - text_height /2));
+				control_point.push(PtoR(xRtoP(entry["center"].x) + text_width /2 ,yRtoP(entry["center"].y) - text_height /2));
+				
+				
+					for(var i = 0; i < control_point.length; i++){
+						if(i == 0)
+							ctx.moveTo(control_point[i].x*canvasXSize, control_point[i].y*canvasYSize);
+						else
+							ctx.lineTo(control_point[i].x*canvasXSize, control_point[i].y*canvasYSize);
+					}
+					ctx.lineTo(control_point[0].x*canvasXSize, control_point[0].y*canvasYSize);
+					ctx.stroke();
+			   
+			   
+				
+				
+				
+			}
+			
+			
+			
+			//ctx.fillStyle = "darkorange";
+			//ctx.fillText("width: "+Math.round(textPxLength.width)+"px",25,100);
+		}
+		
+		
+	   
+	
    
 	});
 	

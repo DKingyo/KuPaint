@@ -75,7 +75,7 @@
 						
 						<ul class="nav navbar-nav navbar-right" >
 							<li class="active" ><a href="#">State</a></li>
-							<li><a href="#">Save</a></li>
+							<li><a href="#" onclick="send()" >Send</a></li>
 							<li><a href="#">Load</a></li>
 							<li onClick="bin()" > <a href="#" >New</a></li>
 						</ul>
@@ -83,7 +83,7 @@
 				</div><!-- /.container-fluid -->
 			</nav>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+			<script src="js/jquery.min.js"></script>
 			<!-- Include all compiled plugins (below), or include individual files as needed -->
 			<script src="js/bootstrap.min.js"></script>
 		</div>
@@ -182,6 +182,9 @@
 											<li><a class="police_size" href="#">20px</a></li>
 											<li><a class="police_size" href="#">24px</a></li>
 											<li><a class="police_size" href="#">28px</a></li>
+											<li><a class="police_size" href="#">32px</a></li>
+											<li><a class="police_size" href="#">38px</a></li>
+											<li><a class="police_size" href="#">46px</a></li>
 									  </ul>
 								</div>
 							</div>
@@ -194,17 +197,19 @@
 						
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button id="font_apply" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		
-		
-	
 		<script src="js/my.js"></script>
 		<script src="js/func.js"></script>
+		
+		<script src="js/texte.js"></script>
+		<script src="js/line.js"></script>
+		<script src="js/draw.js"></script>
+		
 		<script src="js/historique.js"></script>
 		<!-- Bootstrap Form Helpers -->
 		<script src="js/bootstrap-formhelpers.js"></script>

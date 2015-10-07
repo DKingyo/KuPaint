@@ -18,13 +18,15 @@ function add_entry(entry){
 
 //
 
-function add_texte(texte,center,size){
+function add_texte(texte,center,size,font,select){
 	
 	H.push({	"type":"texte",
 				"val": new Array(),
 				"texte":texte,
-				"centre":centre,
-				"size":size
+				"center":center,
+				"size":size,
+				"font":font,
+				"select":select
 				});
 	//add_entry( new_entry("texte",center));
 }
