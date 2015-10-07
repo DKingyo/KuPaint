@@ -43,7 +43,18 @@ function GetHash(jsonData) {
     });
 }
 
-function ImageToJson(imageBase64) {
+function ImageToJson() {
+	
+	
+	console.log("try send file... ");
+	
+	var ImageData  = ctx.getImageData(0, 0, canvasXSize, canvasYSize);
+	console.log(ImageData);
+	
+	var imageBase64 = JSON.stringify(btoa(ImageData.data));
+	
+	
+	
     var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
     $.ajax({
         type: "POST",
@@ -62,15 +73,16 @@ function ImageToJson(imageBase64) {
 
 
 
-function ImagetoJson2(imagebase64){
+function ImagetoJson2(){
 	
 	
 	
-	
+	console.log("try send file... ");
 	
 	var ImageData  = ctx.getImageData(0, 0, canvasXSize, canvasYSize);
+	console.log(ImageData);
 	
-	var Json_Data = JSON.stringify(getBase64Image(ImageData));
+	var Json_Data = JSON.stringify(btoa(ImageData.data));
 	
 	var urlWebService = $("#HfWsUrl").attr("data-content") + "Converters.asmx";
 	$.ajax({
