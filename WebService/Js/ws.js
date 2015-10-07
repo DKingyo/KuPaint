@@ -82,6 +82,8 @@ function ImagetoJson2(imagebase64){
 					if (evt.lengthComputable) {
 						var percentComplete = evt.loaded / evt.total;
 						//Do something with upload progress
+						
+						$(".progress-bar").width(percentComplete+"%");
 						console.log(percentComplete);
 					}
 				}, false);
@@ -89,6 +91,7 @@ function ImagetoJson2(imagebase64){
 				xhr.addEventListener("progress", function(evt){
 					if (evt.lengthComputable) {
 						var percentComplete = evt.loaded / evt.total;
+						$(".progress-bar").width(percentComplete+"%");
 						//Do something with download progress
 						console.log(percentComplete);
 					}
