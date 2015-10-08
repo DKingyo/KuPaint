@@ -20,7 +20,7 @@ function draw_mousemove(event)
 		
 	
 	//21
-	console.log("draw_mousemove");
+	console.log("draw_mousemove"); 
 }
 
 var pick_point_state_moving = 0; // variable d'etat de pick_point 0 -> idle, 1-> moving_point

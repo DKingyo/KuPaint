@@ -42,7 +42,7 @@ $( document ).ready( function (e) {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.font = '18pt Calibri';
 		context.fillStyle = 'black';
-		context.fillText("Dessine moi un mouton !", 10, 25);
+		//context.fillText("Dessine moi un mouton !", 10, 25);
 		
 	ctx = context;
 		
@@ -132,6 +132,8 @@ function handler(event)
 			if(elem == this)
 				p.addClass("active").trigger("btn:start");
 	});
+	
+	$("#btn-undo").removeClass("active");
 }
 
 
@@ -194,6 +196,8 @@ function boucle()
 	ctx.lineWidth = 1;
 	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	
+	console.log("BOUUCLE");
 	
 	drawingPoint.forEach(function(entry) {
    
@@ -308,7 +312,16 @@ function update_drawing()
 	//ctx.strokeStyle = '#ff0000';
 	ctx.lineWidth = 1;
 	
+	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	
+	
+	
+	console.log ("drawingPoint.length" + drawingPoint.length);
+	if(drawingPoint.length == 0){
+	drawingPoint = [ {"x" : -0.1, "y":-0.1}];}
+	
+		
 	
 	drawingPoint.forEach(function(entry) {
    
@@ -323,23 +336,12 @@ function update_drawing()
 		ctx.closePath();
 		ctx.stroke();
 		ctx.restore();
-   
+		console.log("point !!");
    
 	});
 	
-	H.forEach(function(entry) {
-		/*ctx.save();
-		entry.forEach(function (point){
-			ctx.lineTo(point.x*canvasXSize, point.y*canvasYSize);
-			
-		});
-   
 	
-	
-		ctx.closePath();
-		ctx.stroke();
-		ctx.restore();*/
-		
+	H.forEach(function(entry) {		
 		if(entry["type"] == "trait"){
 			ctx.save();
 			
@@ -350,11 +352,6 @@ function update_drawing()
 					ctx.lineTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
 			}
 			ctx.stroke();
-			
-			
-			
-			
-			
 			ctx.restore();
 		}
 		else if(entry["type"] == "rect"){
@@ -370,11 +367,6 @@ function update_drawing()
 			ctx.fill();
 			ctx.globalAlpha = 1;
 			ctx.stroke();
-			
-			
-			
-			
-			
 			ctx.restore();
 		}
 		else if(entry["type"] == "cercle"){
@@ -428,7 +420,7 @@ function update_drawing()
 		}
 		else if (entry["type"] == "texte"){
 			
-			ctx.save();
+			
 			var text = entry["texte"];
 			ctx.font = entry["size"] + " " + entry["font"];
 			ctx.textAlign = "center";
@@ -464,7 +456,7 @@ function update_drawing()
 				
 				
 			}
-			ctx.restore();
+			
 			
 			
 			
@@ -477,9 +469,10 @@ function update_drawing()
 	
    
 	});
+	console.log("clear 3");
 	
 	
-	ctx.beginPath();
+	/*ctx.beginPath();
     ctx.moveTo(75,40);
     ctx.bezierCurveTo(75,37,70,25,50,25);
     ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
@@ -487,7 +480,7 @@ function update_drawing()
     ctx.bezierCurveTo(110,102,130,80,130,62.5);
     ctx.bezierCurveTo(130,62.5,130,25,100,25);
     ctx.bezierCurveTo(85,25,75,37,75,40);
-    ctx.stroke();
+    ctx.stroke();*/
 }
 
 
@@ -586,5 +579,18 @@ function loadImage() {
             
             console.log(msg);
         }
+ }
+ 
+ 
+ function undo(){
+	 
+	 if(H.length >= 1){
+		 H.pop();
+		 
+		 update_drawing();
+		 console.log(H);
+	 }
+	 
+	 
  }
 
