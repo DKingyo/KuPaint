@@ -4,7 +4,7 @@ var ctx; // contexte
 var state = [ "idle", "connected", "moving", "error"];
 var drawingLine = [[ ]];
 
-var drawingPoint = [ {"x" : 0.1, "y":0.1}];
+var drawingPoint = [];
 
 var canvasXSize;
 var canvasYSize;
