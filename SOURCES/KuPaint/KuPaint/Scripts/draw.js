@@ -6,7 +6,7 @@ function draw_mousemove(event)
 		var p2 = eventToR(event);
 		
 		var dist = Math.sqrt((p2.y - p1.y)*(p2.y - p1.y) + (p2.x - p1.x)*(p2.x - p1.x));
-		if( dist*21 > 0.5 )
+		if( dist*21 > 0.2 )
 		{
 			drawingPoint.push(eventToR(event));
 			//drawingLine[drawingLine.length-1].push(eventToR(event));
@@ -20,7 +20,7 @@ function draw_mousemove(event)
 		
 	
 	//21
-	console.log("draw_mousemove");
+	console.log("draw_mousemove"); 
 }
 
 var pick_point_state_moving = 0; // variable d'etat de pick_point 0 -> idle, 1-> moving_point

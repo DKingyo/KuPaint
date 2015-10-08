@@ -1,4 +1,4 @@
-html,body {height:100%;}
+html,body {height:100%; }
 .special {
 	height:100%;
 	padding-top:20px;
@@ -65,7 +65,6 @@ canvas {
 	
 
 	canvas{
-		background-color:red;
 		
 	}
 	.test{
@@ -84,9 +83,12 @@ canvas {
 
 
 
-.icon-draw, .icon-line, .icon-bucket,.icon-bezier,.icon-rect,.icon-cercle,.icon-text{
-	width:24px;
-	height:24px;
+.icon-draw, .icon-line, .icon-bucket,.icon-bezier,.icon-rect,.icon-cercle,.icon-text,.icon-undo{
+	width:26px;
+	height:26px;
+	background-repeat: no-repeat;
+    background-position: center;  
+	
 }
 
 .icon-draw{
@@ -97,8 +99,7 @@ background-image: url("../img/glyphicons-98-vector-path-line.png");
 }
 .icon-bucket{
 background-image: url("../img/glyphicons-481-bucket.png");
-width:25px;
-height:25px;
+
 }
 .icon-bezier{
 background-image: url("../img/glyphicons-99-vector-path-curve.png");
@@ -111,8 +112,9 @@ background-image: url("../img/glyphicons-96-vector-path-circle.png");
 }
 .icon-text{
 background-image: url("../img/glyphicons-108-text-resize.png");
-width:26px;
-height:26px;
+}
+.icon-undo{
+	background-image: url("../img/glyphicons-436-undo.png");
 }
 
 	

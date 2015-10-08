@@ -1,8 +1,10 @@
 function link_buton_event(){
 	$("#btn-line").on("btn:start",start_line).on("btn:stop",stop_line);
 	$("#btn-draw").on("btn:start",start_draw).on("btn:stop",stop_draw);
-	$("#btn-bezier").on("btn:start",start_bezier).on("btn:stop",stop_bezier);
+	$("#btn-bezier").on("btn:start",start_spline).on("btn:stop",stop_spline);
 	$("#btn-text").on("btn:start",start_text).on("btn:stop",stop_text);
+	$("#btn-rect").on("btn:start",start_rect).on("btn:stop",stop_rect);
+	$("#btn-cercle").on("btn:start",start_cercle).on("btn:stop",stop_cercle);
 }
 
 

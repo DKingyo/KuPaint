@@ -50,7 +50,7 @@ namespace KuPaint.Webservices
             if (socketListenning.ThreadState == ThreadState.Running || socketListenning.ThreadState == ThreadState.WaitSleepJoin)
             {
                 AsynchronousSocketListener.ResponseReady = false;
-                AsynchronousSocketListener.Send(clientSocket, "info");
+                AsynchronousSocketListener.Send(clientSocket, "robotInfo");
                 while (!AsynchronousSocketListener.ResponseReady)
                 {
                     Thread.Sleep(50);

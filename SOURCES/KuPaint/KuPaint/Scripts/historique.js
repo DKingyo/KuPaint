@@ -30,9 +30,36 @@ function add_texte(texte,center,size,font,select){
 				});
 	//add_entry( new_entry("texte",center));
 }
+
+
+function add_rect(center,width,height){
+	
+	H.push({	"type":"rect",
+				"val": new Array(),
+				"center":center, 
+				"width":width,
+				"height":height
+				});	
+}
+function add_cercle(center,width,height){
+	
+	H.push({	"type":"cercle",
+				"val": new Array(),
+				"center":center, 
+				"width":width,
+				"height":height
+				});	
+}
+
+
 function add_trait(val){
 	add_entry( new_entry("trait",val));
 }
+
+function add_spline(val){
+	add_entry( new_entry("spline",val));
+}
+
 function add_motif(val){
 	add_entry( new_entry("motif",val));
 }

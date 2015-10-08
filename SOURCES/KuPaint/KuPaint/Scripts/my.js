@@ -4,7 +4,7 @@ var ctx; // contexte
 var state = [ "idle", "connected", "moving", "error"];
 var drawingLine = [[ ]];
 
-var drawingPoint = [ {"x" : 0.1, "y":0.1}];
+var drawingPoint = [];
 
 var canvasXSize;
 var canvasYSize;
@@ -42,7 +42,7 @@ $( document ).ready( function (e) {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.font = '18pt Calibri';
 		context.fillStyle = 'black';
-		context.fillText("Dessine moi un mouton !", 10, 25);
+		//context.fillText("Dessine moi un mouton !", 10, 25);
 		
 	ctx = context;
 		
@@ -69,7 +69,28 @@ $( document ).ready( function (e) {
 	link_buton_event();
 	
    window.setTimeout(update_drawing,1000);
+   
+   
+   window.addEventListener('resize', place_button, true);
+   place_button();
+   
 })
+
+
+
+function place_button(){
+	if ( parseInt($(".test").css("padding-top"), 10)  >= 50 )
+	{
+		$("#button").removeClass();
+		$("#button").addClass("btn-group");
+		
+	}
+	else{
+		$("#button").removeClass();
+		$("#button").addClass("btn-group-vertical");
+	}
+}
+
 
 function canvasResize()
 {
@@ -111,6 +132,8 @@ function handler(event)
 			if(elem == this)
 				p.addClass("active").trigger("btn:start");
 	});
+	
+	$("#btn-undo").removeClass("active");
 }
 
 
@@ -174,6 +197,8 @@ function boucle()
 	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	
+	console.log("BOUUCLE");
+	
 	drawingPoint.forEach(function(entry) {
    
 	ctx.save();
@@ -233,18 +258,22 @@ function boucle()
 
 function change_color_blue(){
 	ctx.strokeStyle = '#3366FF';
+	ctx.fillStyle = '#3366FF';
 	update_drawing();
 }
 function change_color_red(){
 	ctx.strokeStyle = '#FF0000';
+	ctx.fillStyle = '#FF0000';
 	update_drawing();
 }
 function change_color_black(){
 	ctx.strokeStyle = '#191919';
+	ctx.fillStyle = '#191919';
 	update_drawing();
 }
 function change_color_green(){
 	ctx.strokeStyle = '#33CC33';
+	ctx.fillStyle = '#33CC33';
 	update_drawing();
 }
 
@@ -260,7 +289,7 @@ function bin()
 function send(){
 	
 	console.log(build_Json());
-	//sendDataToKuka(build_Json());
+	sendDataToKuka(JSON.stringify(build_Json()));
 
 	/*console.log("send data" + JSON.stringify(H));
 	$.post( "http://localhost/webservices/devicecontroller.asmx/sendData", JSON.stringify(H), function( data ) {
@@ -283,7 +312,16 @@ function update_drawing()
 	//ctx.strokeStyle = '#ff0000';
 	ctx.lineWidth = 1;
 	
+	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	
+	
+	
+	console.log ("drawingPoint.length" + drawingPoint.length);
+	if(drawingPoint.length == 0){
+	drawingPoint = [ {"x" : -0.1, "y":-0.1}];}
+	
+		
 	
 	drawingPoint.forEach(function(entry) {
    
@@ -298,25 +336,14 @@ function update_drawing()
 		ctx.closePath();
 		ctx.stroke();
 		ctx.restore();
-   
+		console.log("point !!");
    
 	});
 	
-	H.forEach(function(entry) {
-		/*ctx.save();
-		entry.forEach(function (point){
-			ctx.lineTo(point.x*canvasXSize, point.y*canvasYSize);
-			
-		});
-   
 	
-	
-		ctx.closePath();
-		ctx.stroke();
-		ctx.restore();*/
-		
+	H.forEach(function(entry) {		
 		if(entry["type"] == "trait"){
-			//ctx.save();
+			ctx.save();
 			
 			for(var i = 0; i < entry["val"].length; i++){
 				if(i == 0)
@@ -325,9 +352,75 @@ function update_drawing()
 					ctx.lineTo(entry["val"][i].x*canvasXSize, entry["val"][i].y*canvasYSize);
 			}
 			ctx.stroke();
-			//ctx.restore();
+			ctx.restore();
+		}
+		else if(entry["type"] == "rect"){
+			ctx.save();
+			ctx.beginPath();
+			ctx.moveTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			
+			ctx.closePath();
+			ctx.globalAlpha = 0.1;
+			ctx.fill();
+			ctx.globalAlpha = 1;
+			ctx.stroke();
+			ctx.restore();
+		}
+		else if(entry["type"] == "cercle"){
+			ctx.save();
+			ctx.beginPath();
+			ctx.ellipse(entry["center"].x*canvasXSize,entry["center"].y*canvasYSize,entry["width"]*canvasXSize/2,entry["height"]*canvasYSize/2,0,0,Math.PI*2,0);
+			ctx.closePath();
+			
+			
+			/*ctx.beginPath();
+			ctx.moveTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x - entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y + entry["height"]/2)*canvasYSize );
+			ctx.lineTo((entry["center"].x + entry["width"]/2)*canvasXSize, (entry["center"].y - entry["height"]/2)*canvasYSize );
+			
+			ctx.closePath();*/
+			ctx.globalAlpha = 0.1;
+			ctx.fill();
+			ctx.globalAlpha = 1;
+			ctx.stroke();
+			
+			
+			
+			
+			
+			ctx.restore();
+		}
+		else if(entry["type"] == "spline"){
+			
+			if (entry["val"].length >= 3)
+			{
+				ctx.save();
+				console.log("bezier");
+				ctx.moveTo(entry["val"][0].x* canvasXSize, entry["val"][0].y * canvasYSize);
+
+				var i;
+				for (i = 1; i < entry["val"].length - 2; i ++)
+				{
+				  var xc = (entry["val"][i].x * canvasXSize + entry["val"][i + 1].x * canvasXSize) / 2;
+				  var yc = (entry["val"][i].y * canvasYSize + entry["val"][i + 1].y * canvasYSize) / 2;
+				  ctx.quadraticCurveTo(entry["val"][i].x * canvasXSize, entry["val"][i].y * canvasYSize, xc, yc);
+				}
+				 // curve through the last two points
+				 ctx.quadraticCurveTo(entry["val"][i].x * canvasXSize, entry["val"][i].y * canvasYSize, entry["val"][i+1].x * canvasXSize,entry["val"][i+1].y * canvasYSize);
+				
+				ctx.stroke();
+				ctx.restore();
+			}
+			
+			
 		}
 		else if (entry["type"] == "texte"){
+			
+			
 			var text = entry["texte"];
 			ctx.font = entry["size"] + " " + entry["font"];
 			ctx.textAlign = "center";
@@ -366,6 +459,7 @@ function update_drawing()
 			
 			
 			
+			
 			//ctx.fillStyle = "darkorange";
 			//ctx.fillText("width: "+Math.round(textPxLength.width)+"px",25,100);
 		}
@@ -375,9 +469,10 @@ function update_drawing()
 	
    
 	});
+	console.log("clear 3");
 	
 	
-	ctx.beginPath();
+	/*ctx.beginPath();
     ctx.moveTo(75,40);
     ctx.bezierCurveTo(75,37,70,25,50,25);
     ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
@@ -385,13 +480,13 @@ function update_drawing()
     ctx.bezierCurveTo(110,102,130,80,130,62.5);
     ctx.bezierCurveTo(130,62.5,130,25,100,25);
     ctx.bezierCurveTo(85,25,75,37,75,40);
-    ctx.stroke();
+    ctx.stroke();*/
 }
 
 
 function build_Json(){
 	
-	var path = { "path": new Array()};
+    var path = { "path": new Array(), "width": 1, "height": 1 };
 	
 	
 	
@@ -403,7 +498,7 @@ function build_Json(){
 		if(entry["type"] == "trait"){
 			var trait = {"id":id,"pts":[]};
 			for(var i = 0; i < entry["val"].length; i++){
-				trait["pts"].push(entry["val"][i]);
+			    trait["pts"].push(Point(entry["val"][i].x, 1-entry["val"][i].y));
 			}
 			path["path"].push(trait);
 		}
@@ -424,10 +519,80 @@ function upload_display_modal(){
 
 
 function send_file(){
+	
+    var imgplop = loadImage();
+    //ImagetoJson2(imgplop);
+	/*
 	console.log($('#InputFile')[0].files);
+	
+	var wut = new Image();
+	wut.src = $('#InputFile')[0].files[0];
 	ImagetoJson2($('#InputFile')[0].files[0]);
+	*/
+	
+	
 }
 
 
+function loadImage() {
+        var input, file, fr, img;
 
+        if (typeof window.FileReader !== 'function') {
+            write("The file API isn't supported on this browser yet.");
+            return;
+        }
 
+        input = document.getElementById('InputFile');
+        if (!input) {
+            write("Um, couldn't find the imgfile element.");
+        }
+        else if (!input.files) {
+            write("This browser doesn't seem to support the `files` property of file inputs.");
+        }
+        else if (!input.files[0]) {
+            write("Please select a file before clicking 'Load'");
+        }
+        else {
+            file = input.files[0];
+            fr = new FileReader();
+            fr.onload = createImage;
+            fr.readAsDataURL(file);
+        }
+
+        function createImage() {
+            img = new Image();
+            img.onload = imageLoaded;
+            img.src = fr.result;
+        }
+
+        function imageLoaded() {
+            var canvas = document.getElementById("hidden_canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img,0,0);
+            console.log(canvas.toDataURL("image/png"));
+            ImagetoJson2(canvas.toDataURL("image/png"));
+			return "" + canvas.toDataURL("image/png");
+        }
+
+        function write(msg) {
+            
+            console.log(msg);
+        }
+ }
+ 
+ 
+ function undo(){
+	 
+	 if(H.length >= 1){
+		 H.pop();
+		 
+		 update_drawing();
+		 console.log(H);
+	 }
+	 
+	 
+ }
+
+ 

@@ -68,6 +68,11 @@ function text_mousedown(){
 function set_texte(event){
 		
 	
+	
+		if(H[H.length-1]["select"]){
+			H[H.length-1]["select"] = false;
+		}
+	
 		font_center = eventToR(event);
 		console.log("set_texte");
 		$('#textmodal').modal('toggle');
@@ -188,12 +193,17 @@ function texte_picked_point_moving(event){
 		var police_size = Math.round(yRtoP(Math.abs(p1.y-p2.y)*2));
 		
 		text_height = police_size;
-		text_width = 
 		
 		H[H.length-1]["size"] =  police_size + "px";
 		
+		ctx.font = H[H.length-1]["size"] + " " + font;
+		
+		
+		
 		size  = ctx.measureText(H[H.length-1]["texte"]);
 		text_width = size.width;
+		
+		console.log(text_width + " " + ctx.font + H[H.length-1]["texte"]);
 		
 		drawingPoint = [];
 	

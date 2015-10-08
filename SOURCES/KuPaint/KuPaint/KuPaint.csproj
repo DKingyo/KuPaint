@@ -212,6 +212,7 @@
     <Content Include="img\glyphicons-235-brush.png" />
     <Content Include="img\glyphicons-236-pen.png" />
     <Content Include="img\glyphicons-31-pencil.png" />
+    <Content Include="img\glyphicons-436-undo.png" />
     <Content Include="img\glyphicons-481-bucket.png" />
     <Content Include="img\glyphicons-91-eyedropper.png" />
     <Content Include="img\glyphicons-92-adjust.png" />
@@ -231,6 +232,7 @@
     <Content Include="Scripts\bootstrap-formhelpers.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\cercle.js" />
     <Content Include="Scripts\draw.js" />
     <Content Include="Scripts\func.js" />
     <Content Include="Scripts\historique%3bjs.txt" />
@@ -239,6 +241,8 @@
     <Content Include="Scripts\line.js" />
     <Content Include="Scripts\my.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\rect.js" />
+    <Content Include="Scripts\spline.js" />
     <Content Include="Scripts\texte.js" />
     <Content Include="Scripts\ws.js" />
     <Content Include="Webservices\Converters.asmx" />
