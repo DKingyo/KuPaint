@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/mycss.css" rel="stylesheet">
+
+    <!-- Bootstrap Form Helpers -->
+    <link href="~/Content/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <asp:HiddenField id="HfWsUrl" data-content="@string.Concat("http://", System.Web.HttpContext.Current.Request.Url.Host, "/KuPaint/WebServices/")"></asp:HiddenField>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <!-- Split button -->
+                    <div class="btn-group nav navbar-nav navbar-right">
+                        <button type="button" class="btn btn-primary  navbar-btn">Setting</button>
+                        <button type="button" class="btn btn-primary  navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Live</a></li>
+                            <li><a href="#">Paint</a></li>
+                            <li><a href="#">View</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li onClick="change_color_blue()">	<a href="#">Blue</a></li>
+                                <li onClick="change_color_red()">	<a href="#">Red</a></li>
+                                <li onClick="change_color_green()"><a href="#">Green</a></li>
+                                <li onClick="change_color_black()"><a href="#">Black</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#">State</a></li>
+                        <li><a href="#" onclick="send()">Send</a></li>
+                        <li onClick="upload_display_modal()"><a href="#">Load</a></li>
+                        <li onClick="bin()"> <a href="#">New</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="~/Scripts/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="~/Scripts/bootstrap.min.js"></script>
+    </div>
+    <div id="blop" class="container blop">
+        <div class="container special">
+            <div id="alertArea" class="alertArea">
+                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+                </div>
+            </div>
+
+
+            <div id="jumbotron" class="jumbotron">
+                <div id="button" class="btn-group-vertical hidden-xs" role="group">
+                    <button id="btn-draw" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-draw"></span>
+                    </button>
+                    <button id="btn-bucket" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-bucket"></span>
+                    </button>
+                    <button id="btn-line" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-line"></span>
+                    </button>
+                    <button id="btn-bezier" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-bezier"></span>
+                    </button>
+                    <button id="btn-rect" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-rect"></span>
+                    </button>
+                    <button id="btn-cercle" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-cercle"></span>
+                    </button>
+                    <button id="btn-text" type="button" class="btn btn-default">
+                        <span class="glyphicon icon-text"></span>
+                    </button>
+                </div>
+                <div class="btn-group visible-xs-inline-block" role="group">
+                    <button type="button" class="btn btn-default">1</button>
+                    <button type="button" class="btn btn-default">2</button>
+                    <button type="button" class="btn btn-default">3</button>
+                </div>
+                <div class="test">
+                    <canvas id="mainCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="textmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Text setting</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div id="font" class="bfh-selectbox bfh-fonts" data-blank="false" data-font="Arial" style="display:inline-block;"></div>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Font size
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a class="police_size" href="#">8px</a></li>
+                                    <li><a class="police_size" href="#">10px</a></li>
+                                    <li><a class="police_size" href="#">12px</a></li>
+                                    <li><a class="police_size" href="#">14px</a></li>
+                                    <li><a class="police_size" href="#">18px</a></li>
+                                    <li><a class="police_size" href="#">20px</a></li>
+                                    <li><a class="police_size" href="#">24px</a></li>
+                                    <li><a class="police_size" href="#">28px</a></li>
+                                    <li><a class="police_size" href="#">32px</a></li>
+                                    <li><a class="police_size" href="#">38px</a></li>
+                                    <li><a class="police_size" href="#">46px</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <input id="font_text" type="text" class="form-control" placeholder="Jane Doe">
+                            <p id="font_text_p" style="margin-top:5px">Some text in the modal.</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="font_apply" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="filemodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Text setting</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="InputFile">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                            <span class="sr-only">45% Complete</span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button onclick="send_file()" id="file_send" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="~/Scripts/my.js"></script>
+    <script src="~/Scripts/func.js"></script>
+
+    <script src="~/Scripts/texte.js"></script>
+    <script src="~/Scripts/line.js"></script>
+    <script src="~/Scripts/draw.js"></script>
+
+    <script src="~/Scripts/historique.js"></script>
+    <script src="~/Scripts/ws.js"></script>
+    <!-- Bootstrap Form Helpers -->
+    <script src="~/Scripts/bootstrap-formhelpers.js"></script>
+
+</body>
+</html>

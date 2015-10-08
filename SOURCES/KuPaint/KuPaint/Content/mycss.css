@@ -1,0 +1,118 @@
+html,body {height:100%;}
+.special {
+	height:100%;
+	padding-top:20px;
+	padding-bottom:5px;
+	
+	
+}
+.blop{
+	position:absolute;
+	padding-top:50px;
+	width:100%;
+	height:100px;
+	top:0px;
+
+
+}
+
+
+.alertArea{
+	margin-bottom:20px;
+	height:53px;
+}
+
+.special .jumbotron {
+	//height:100%;
+	position:relative;
+	margin-bottom:0px;
+	padding:25px;
+	min-height:348px;
+	}
+
+canvas {
+	background-color:#FFFFFF;
+	position:relative;
+	bottom:0px;
+	width:100%;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	cursor: default;
+	/*height:100%;*/
+	/*z-index:1;*/
+	}
+
+
+	
+	
+.test{
+	position:absolute;
+	display:inline-block;
+	bottom:0px;
+	right:0px;
+	width:100%;
+	height:100%;
+	padding:25px;
+	padding-left:100px;
+	min-height:298px;
+	/*z-index:-1;*/
+	
+}
+
+
+@media only screen and (max-width: 768px){
+	
+
+	canvas{
+		background-color:red;
+		
+	}
+	.test{
+		padding:25px;
+		padding-top:100px;
+	}
+}
+
+
+.navbar, .maincanvas, .btn-group-vertical,.btn-group{
+	z-index:1;
+}
+
+
+
+
+
+
+.icon-draw, .icon-line, .icon-bucket,.icon-bezier,.icon-rect,.icon-cercle,.icon-text{
+	width:24px;
+	height:24px;
+}
+
+.icon-draw{
+background-image: url("../img/glyphicons-31-pencil.png");
+}
+.icon-line{
+background-image: url("../img/glyphicons-98-vector-path-line.png");
+}
+.icon-bucket{
+background-image: url("../img/glyphicons-481-bucket.png");
+width:25px;
+height:25px;
+}
+.icon-bezier{
+background-image: url("../img/glyphicons-99-vector-path-curve.png");
+}
+.icon-rect{
+background-image: url("../img/glyphicons-95-vector-path-square.png");
+}
+.icon-cercle{
+background-image: url("../img/glyphicons-96-vector-path-circle.png");
+}
+.icon-text{
+background-image: url("../img/glyphicons-108-text-resize.png");
+width:26px;
+height:26px;
+}
+
+	

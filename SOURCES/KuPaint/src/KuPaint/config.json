@@ -1,0 +1,10 @@
+﻿{
+  "AppSettings": {
+    "SiteTitle": "KuPaint"
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-KuPaint-f38e86e2-fe61-4a47-b2f4-d0b4b1aed3db;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}

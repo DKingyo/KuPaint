@@ -1,0 +1,6 @@
+C:\Users\Loïc\documents\visual studio 2015\Projects\KuPaint\TestTcpSyncSocketClient\bin\Debug\TestTcpSyncSocketClient.exe.config
+C:\Users\Loïc\documents\visual studio 2015\Projects\KuPaint\TestTcpSyncSocketClient\bin\Debug\TestTcpSyncSocketClient.exe
+C:\Users\Loïc\documents\visual studio 2015\Projects\KuPaint\TestTcpSyncSocketClient\bin\Debug\TestTcpSyncSocketClient.pdb
+C:\Users\Loïc\documents\visual studio 2015\Projects\KuPaint\TestTcpSyncSocketClient\obj\Debug\TestTcpSyncSocketClient.exe
+C:\Users\Loïc\documents\visual studio 2015\Projects\KuPaint\TestTcpSyncSocketClient\obj\Debug\TestTcpSyncSocketClient.pdb
+C:\Users\Loïc\documents\visual studio 2015\Projects\KuPaint\TestTcpSyncSocketClient\obj\Debug\TestTcpSyncSocketClient.csprojResolveAssemblyReference.cache

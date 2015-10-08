@@ -1,0 +1,39 @@
+﻿@{var info = (KuPaint.Models.DeviceInfo)ViewData["deviceInfo"]; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content="5">
+    <title>Device Infos</title>
+</head>
+<body>
+    <div>
+        @{if (string.IsNullOrEmpty(info.Error))
+            {
+                <label>Avancement: </label>@(string.Concat(info.Avancement, "%"))<br />
+                <br />
+                <label>Joint values: </label>@(info.JointValues)<br />
+                <br />
+                <label>TOOL</label><br />
+                <label>Position X: </label>@(info.Position.X)<br />
+                <label>Position Y: </label>@(info.Position.Y)<br />
+                <label>Position Z: </label>@(info.Position.Z)<br />
+                <br />
+                <label>BASE</label><br />
+                <label>X: </label>@(info.PaperBase.X)<br />
+                <label>Y: </label>@(info.PaperBase.Y)<br />
+                <label>Z: </label>@(info.PaperBase.Z)<br />
+                <label>Transformation X: </label>@(info.PaperBase.TransformationX)<br />
+                <label>Transformation Y: </label>@(info.PaperBase.TransformationY)<br />
+                <label>Transformation Z: </label>@(info.PaperBase.TransformationZ)<br />
+            }
+            else
+            {
+                <label>Erreur: </label>@(info.Error)<br />
+            }
+        }
+    </div>
+</body>
+</html>
